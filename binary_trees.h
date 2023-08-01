@@ -56,4 +56,6 @@ binary_tree_t *binary_tree_rotate_left(binary_tree_t *tree);
 binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree);
 size_t binary_tree_size(const binary_tree_t *tree);
 int is_complete_recursive(const binary_tree_t *tree, int index, int node_count);
+int is_bst_helper(const binary_tree_t *tree, int *prev_val);
+int binary_tree_is_bst(const binary_tree_t *tree);
 #endif
