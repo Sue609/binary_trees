@@ -75,5 +75,4 @@ avl_t *avl_insert(avl_t **tree, int value);
 avl_t *avl_insert(avl_t **tree, int value);
 avl_t *avl_insert_recursive(avl_t **tree, avl_t *parent, int value);
 
-typedef struct binary_tree_s avl_t;
 #endif
