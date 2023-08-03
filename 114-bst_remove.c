@@ -2,21 +2,18 @@
 #include <stdlib.h>
 
 /**
- * find_in_order_successor - Find the in-order successor of a given node.
+ * bst_minimum - Finds the minimum node in a BST
+ * @node: Pointer to the root node of the tree
  *
- * @node: Pointer to the node to find the in-order successor for.
- *
- * Return: Pointer to the in-order successor node.
+ * Return: Pointer to the minimum node.
  */
-bst_t *find_in_order_successor(bst_t *node)
+bst_t *bst_minimum(bst_t *node)
 {
-	bst_t *current = node->right;
-
-	while (current && current->left)
-		current = current->left;
-
-	return (current);
+	while (node->left != NULL)
+		node = node->left;
+	return (node);
 }
+
 
 /**
  * bst_remove - Removes a node from a Binary Search Tree (BST).
@@ -51,10 +48,9 @@ bst_t *bst_remove(bst_t *root, int value)
 			free(root);
 			return (temp);
 		}
-		bst_t *successor = find_in_order_successor(root);
-
-		root->n = successor->n;
-		root->right = bst_remove(root->right, successor->n);
+		bst_t *temp = bst_minimum(root->right);
+		root->n = temp->n;
+		root->right = bst_remove(root->right, temp->n);
 	}
 	return (root);
 }
