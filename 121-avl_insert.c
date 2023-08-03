@@ -12,7 +12,7 @@ avl_t *avl_insert(avl_t **tree, int value)
 {
 	if (tree == NULL)
 		return (NULL);
-	return (avl_insert_recursive(tree, NULL, value));
+	return (avl_insert_recursive(tree, value, NULL));
 }
 
 
@@ -25,44 +25,17 @@ avl_t *avl_insert(avl_t **tree, int value)
  *
  * Return: Pointer to the created node, or NULL on failure.
  */
-avl_t *avl_insert_recursive(avl_t **tree, avl_t *parent, int value)
-{
-	int balance;
 
+avl_t *avl_insert_recursive(avl_t **tree, int value, avl_t *parent)
+{
 	if (*tree == NULL)
 	{
 		*tree = binary_tree_node(parent, value);
 		return (*tree);
 	}
 	if (value < (*tree)->n)
-	{
-		(*tree)->left = avl_insert_recursive(&((*tree)->left), *tree, value);
-	}
+		return (avl_insert_recursive(&((*tree)->left), value, *tree));
 	else if (value > (*tree)->n)
-		(*tree)->right = avl_insert_recursive(&((*tree)->right), *tree, value);
-	else
-		return (NULL);
-
-	balance = binary_tree_balance(*tree);
-	(*tree)->balance = balance;
-
-	if (balance > 1 && value < (*tree)->left->n)
-		return (binary_tree_rotate_right(*tree));
-
-	if (balance < -1 && value > (*tree)->right->n)
-		return (binary_tree_rotate_left(*tree));
-
-	if (balance > 1 && value > (*tree)->left->n)
-	{
-		(*tree)->left = binary_tree_rotate_left((*tree)->left);
-		return (binary_tree_rotate_right(*tree));
-	}
-
-	if (balance < -1 && value < (*tree)->right->n)
-	{
-		(*tree)->right = binary_tree_rotate_right((*tree)->right);
-		return (binary_tree_rotate_left(*tree));
-	}
-
-	return (*tree);
+		return (avl_insert_recursive(&((*tree)->right), value, *tree));
+	return (NULL);
 }
